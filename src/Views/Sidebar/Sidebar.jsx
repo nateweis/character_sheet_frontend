@@ -8,10 +8,10 @@ function Sidebar(){
     <div className='page-container'>
         <div className="sidebar">
             <ul>
-                <li className="nav-link"> <Link to="home">Character Sheet</Link> </li>
+                <Link to="home"><li className="nav-link"> Character Sheet </li></Link>
                 <li className="nav-link">Profile</li>
                 <li className="nav-link">Modifiers</li>
-                <li className="nav-link"> <Link to="items">Equipment</Link> </li>
+                <Link to="items"><li className="nav-link"> Equipment </li></Link>
                 <li className="nav-link">Skills</li>
                 <li className="nav-link">Attacks</li>
                 <li className="nav-link">Magic</li>
