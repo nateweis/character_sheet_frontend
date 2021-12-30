@@ -1,19 +1,22 @@
 import React from 'react';
 import {Outlet, Link} from 'react-router-dom'
+import './sidebar.css'
 
 function Sidebar(){
 
   return(
-    <div>
-      <ul>
-          <li> <Link to="home">Character Sheet</Link> </li>
-          <li>Profile</li>
-          <li>Modifiers</li>
-          <li> <Link to="items">Equipment</Link> </li>
-          <li>Skills</li>
-          <li>Attacks</li>
-          <li>Magic</li>
-      </ul>
+    <div className='page-container'>
+        <div className="sidebar">
+            <ul>
+                <li className="nav-link"> <Link to="home">Character Sheet</Link> </li>
+                <li className="nav-link">Profile</li>
+                <li className="nav-link">Modifiers</li>
+                <li className="nav-link"> <Link to="items">Equipment</Link> </li>
+                <li className="nav-link">Skills</li>
+                <li className="nav-link">Attacks</li>
+                <li className="nav-link">Magic</li>
+            </ul>
+        </div>
       <Outlet />
     </div>
   )

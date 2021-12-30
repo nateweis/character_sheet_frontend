@@ -1,0 +1,10 @@
+https://www.dnd5eapi.co/api/
+
+options include api/
+classes
+spells
+monsters
+features
+*classname*/spells
+
+and more

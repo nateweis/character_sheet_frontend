@@ -3,7 +3,7 @@ import React from 'react';
 export default ()=>{
 
   return(
-    <div>
+    <div className='char-pg'>
       Items
     </div>
   )
