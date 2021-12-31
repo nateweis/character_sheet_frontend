@@ -15,7 +15,7 @@
     cursor: pointer;
 }
 .sidebar li:hover{
-    background-color: var(--gold);
+    background-color: var(--blue);
 }
 .sidebar ul{
     list-style: none;
