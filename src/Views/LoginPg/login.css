@@ -85,6 +85,13 @@
 }
 .login-form .group .button{
 	background:var(--blue);
+    cursor: pointer;
+    transition: .4s ease-in-out;
+}
+.login-form .group .button:hover{
+    background-color: var(--brown);
+    color: var(--blue);
+    font-weight: bold;
 }
 .login-form .group label .icon{
 	width:15px;
@@ -140,4 +147,10 @@
 }
 .foot-lnk{
 	text-align:center;
+}
+.error-msg{
+    color: var(--red);
+    font-size: 18px;
+    font-weight: 900;
+    text-align: center;
 }
