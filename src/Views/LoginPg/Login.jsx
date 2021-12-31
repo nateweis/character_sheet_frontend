@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './login.css';
 
 export default ()=>{
-    const initalState = {siUser : "",siPass : "",suUser : "",suPass : "",suPass2: "", errMsg :"", "tab-1": true, "tab-2": false}
+    const initalState = {siUser : "",siPass : "",suUser : "",suPass : "",suPass2: "",completeMsg: '', errMsg :"", "tab-1": true, "tab-2": false}
     const [loginState, setLoginState] = useState(initalState)
 
     const checkFormFeilds = () => {
@@ -19,18 +19,40 @@ export default ()=>{
                 setLoginState({...loginState, errMsg: "Confirmation Password Has To Match Password", suPass2: ""})
                 return false
             }
-            else return true
-        }else return true
+            else return 'signUp'
+        }else return 'signIn'
     }
 
     const handleChange = (e) => {
         setLoginState({...loginState, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const goodFeilds = checkFormFeilds()
-        console.log(goodFeilds)
+        if(goodFeilds === 'signUp'){
+            const status = await newUser({id: 1, username: loginState.suUser, password: loginState.suPass})
+            if(status === "User Made"){
+                setLoginState({...initalState, completeMsg: "Sign Up Success"})
+            }
+            else if(status === "Username already exists"){
+                setLoginState({...loginState, errMsg: "Username Already Taken", suUser: ""})
+            }
+        }
+        else if(goodFeilds === 'signIn'){
+            console.log("sign it in")
+        }
+    }
+
+    const newUser = (obj) => {
+        return new Promise((resovle, reject) => {
+            fetch('http://localhost:3001/users/newUser',{method: 'POST', headers:{'Accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify(obj)})
+            .then(res => {
+                res.json()
+                .then(data => resovle(data.message))
+                .catch(err => {})
+            })
+        })
     }
 
     const tabChange = (e) => {
@@ -44,8 +66,10 @@ export default ()=>{
     <div className=''>
         <div className="login-wrap">
             <div className="login-html">
-                <input id="tab-1" type="radio" name="tab" className="sign-in" defaultChecked onClick={tabChange} /><label htmlFor="tab-1" className="tab">Sign In</label>
-                <input id="tab-2" type="radio" name="tab" className="sign-up" onClick={tabChange} /><label htmlFor="tab-2" className="tab">Sign Up</label>
+                <input id="tab-1" type="radio" name="tab" className="sign-in" checked={loginState['tab-1']} onClick={tabChange} readOnly />
+                <label htmlFor="tab-1" className="tab">Sign In</label>
+                <input id="tab-2" type="radio" name="tab" className="sign-up" checked={loginState['tab-2']} onClick={tabChange} readOnly />
+                <label htmlFor="tab-2" className="tab">Sign Up</label>
                 <div className="login-form">
                     <div className="sign-in-htm">
                         <div className="group">
@@ -62,6 +86,7 @@ export default ()=>{
                         </div>
 
                         <div className="hr"></div>
+                        <div className='comp-msg'>{loginState.completeMsg} </div>
                         <div className='error-msg'>{loginState.errMsg} </div>
                        
                     </div>
