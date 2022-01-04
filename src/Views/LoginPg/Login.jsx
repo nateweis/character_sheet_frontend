@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Auth from '../../models/Auth';
 import './login.css';
 
 export default ()=>{
@@ -20,7 +21,14 @@ export default ()=>{
                 return false
             }
             else return 'signUp'
-        }else return 'signIn'
+        }
+        else{
+            if(loginState.siUser.length < 1 || loginState.siPass.length < 1){
+                setLoginState({...loginState, errMsg: "Please Fill In Both Feilds"})
+                return false
+            }
+            else return 'signIn'
+        }
     }
 
     const handleChange = (e) => {
@@ -40,7 +48,11 @@ export default ()=>{
             }
         }
         else if(goodFeilds === 'signIn'){
-            console.log("sign it in")
+            const result = await signIn({username: loginState.siUser, password: loginState.siPass})
+            if(result.message === 'wrong username or Password') setLoginState({...loginState, errMsg: "Wrong Username or Password", siUser: "", siPass: ""})
+            else{
+                Auth.saveToken(result.token)
+            }
         }
     }
 
@@ -50,6 +62,17 @@ export default ()=>{
             .then(res => {
                 res.json()
                 .then(data => resovle(data.message))
+                .catch(err => {})
+            })
+        })
+    }
+
+    const signIn = (obj) => {
+        return new Promise((resovle, reject) => {
+            fetch('http://localhost:3001/users',{method: 'POST', headers:{'Accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify(obj)})
+            .then(res => {
+                res.json()
+                .then(data => resovle(data))
                 .catch(err => {})
             })
         })
