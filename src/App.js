@@ -6,13 +6,15 @@ import Sidebar from './Views/Sidebar/Sidebar';
 import Home from './Views/HomePg/Home';
 import Items from './Views/ItemsPg/Items';
 
+import Auth from './models/Auth'
+
 function App(){
 
   return(
     <BrowserRouter>
       <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="character" element={<Sidebar />}>
+          <Route path="/" element={Auth.getToken() ? <Navigate to="/character/home" /> : <Login />} />
+          <Route path="character" element={Auth.getToken() ? <Sidebar /> : <Navigate to="/" />}>
              <Route path="home" element={<Home />} />
              <Route path="items" element={<Items />} />
           </Route>

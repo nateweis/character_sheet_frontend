@@ -52,6 +52,7 @@ export default ()=>{
             if(result.message === 'wrong username or Password') setLoginState({...loginState, errMsg: "Wrong Username or Password", siUser: "", siPass: ""})
             else{
                 Auth.saveToken(result.token)
+                window.location.reload();
             }
         }
     }
